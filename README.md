@@ -4,6 +4,10 @@ Reverse engineering **Wintermute's** market making quoting strategy on Hyperliqu
 
 **Wallet:** `0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00`
 
+## Similar Analysis
+
+This analysis follows a similar approach to [this X thread](https://x.com/0xLoris/status/2011179831942090783), reverse engineering market-making strategies through on-chain data and order book analysis.
+
 ## Quick Start
 
 ```bash
