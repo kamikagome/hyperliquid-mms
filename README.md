@@ -18,28 +18,26 @@ After running the data fetching and chart generation scripts, you can view a uni
 
 - **[REPORT.md](REPORT.md)** - A comprehensive markdown dashboard embedding all strategy charts, inventory stats, and account summaries. Perfect for reviewing the entire operation in a single scrollable view.
 
-## Quoting Strategy Overview
-
-Wintermute quotes **$199M total notional** across **76 markets** with ~1,700 resting orders.
+Wintermute quotes **$193M total notional** across **82 markets** with ~1,645 resting orders.
 
 | Metric | Value |
 |--------|-------|
-| Total Orders | 1,732 |
-| Markets Quoted | 76 |
-| Bid Notional | $101.7M |
-| Ask Notional | $97.2M |
-| Bid/Ask Ratio | 1.05 (near symmetric) |
+| Total Orders | 1,645 |
+| Markets Quoted | 82 |
+| Bid Notional | $97.6M |
+| Ask Notional | $95.5M |
+| Bid/Ask Ratio | 1.02 (near symmetric) |
 
 ## Top Markets by Quoted Notional
 
 | Market | Notional | Orders | Spread (bps) | Avg Spacing |
 |--------|----------|--------|--------------|-------------|
-| BTC | $78.1M | 105 | 0.96 | 5.8 bps |
-| ETH | $32.0M | 103 | 2.19 | 5.9 bps |
-| SOL | $14.1M | 54 | 1.39 | 15.4 bps |
-| HYPE | $9.7M | 27 | 23.8 | 67.2 bps |
-| XRP | $9.6M | 58 | 8.07 | 26.2 bps |
-| DOGE | $9.1M | 38 | 4.18 | 32.8 bps |
+| BTC | $76.8M | 103 | 2.53 | 5.8 bps |
+| ETH | $42.9M | 101 | 1.26 | 6.1 bps |
+| SOL | $16.9M | 36 | 2.81 | 21.1 bps |
+| XRP | $16.5M | 35 | 3.56 | 20.4 bps |
+| PAXG | $1.9M | 26 | 8.56 | 3.0 bps |
+| SUI | $1.8M | 14 | 6.18 | 75.5 bps |
 
 ## Tiered Size Structure
 
@@ -137,6 +135,14 @@ python scripts/fetch_balances.py    # Supplementary: spot balances
 python scripts/fetch_all.py         # Run all scripts
 ```
 
+## Robustness & Reliability
+
+The data fetching pipeline is designed for high reliability under fluctuating network conditions:
+
+- **Automatic Retries:** Implements an exponential backoff strategy for 5xx server errors.
+- **Hung Connection Recovery:** Every API request is bounded by a **10-second timeout** to prevent indefinite script hangs.
+- **Error Handling:** Sequential execution in `fetch_all.py` ensures that transient failures in one component don't stall the entire pipeline.
+
 ## API Reference
 
 ```bash
@@ -162,4 +168,4 @@ The quoting strategy is consistent with **Avellaneda-Stoikov** optimal market ma
 
 ---
 
-*Analysis performed January 13, 2026. Data refreshes on each script run.*
+*Analysis performed April 15, 2026. Data refreshes on each script run.*
