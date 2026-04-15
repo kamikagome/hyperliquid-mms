@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Fetch all MM data from Hyperliquid for 1 day.
+Fetch all Wintermute data from Hyperliquid for 1 day.
 Primary focus: quoting strategy analysis from open orders.
 """
 
@@ -10,15 +10,15 @@ from pathlib import Path
 
 def main():
     scripts_dir = Path(__file__).parent
-    
+
     # Main script first (quoting strategy)
     scripts = [
         ("Quoting Strategy (open orders)", "fetch_orders.py"),
         ("Positions (inventory)", "fetch_positions.py"),
         ("Spot Balances", "fetch_balances.py"),
     ]
-    
-    print("MM Hyperliquid Data Fetcher")
+
+    print("Wintermute Hyperliquid Data Fetcher")
     
     for name, script in scripts:
         print(f"\n{'='*60}")

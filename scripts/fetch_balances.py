@@ -1,9 +1,10 @@
 import requests
 import csv
+import os
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-WALLET = "0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
+WALLET = "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
 API_URL = "https://api.hyperliquid.xyz/info"
 OUTPUT_FILE = "data/balances.csv"
 
@@ -53,6 +54,7 @@ def main():
     # Write to CSV
     fieldnames = ["coin", "total", "hold", "available", "entry_notional"]
     
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     with open(OUTPUT_FILE, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()

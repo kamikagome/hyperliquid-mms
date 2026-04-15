@@ -1,8 +1,8 @@
-# MM Hyperliquid Quoting Strategy Analysis
+# Wintermute Hyperliquid Quoting Strategy Analysis
 
-Reverse engineering **MM's** market making quoting strategy on Hyperliquid.
+Reverse engineering **Wintermute's** market making quoting strategy on Hyperliquid.
 
-**Wallet:** `0x5b5d51203a0f9079f8aeb098a6523a13f298c060`
+**Wallet:** `0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00`
 
 ## Quick Start
 
@@ -18,7 +18,7 @@ After running the data fetching and chart generation scripts, you can view a uni
 
 - **[REPORT.md](REPORT.md)** - A comprehensive markdown dashboard embedding all strategy charts, inventory stats, and account summaries. Perfect for reviewing the entire operation in a single scrollable view.
 
-MM quotes **$193M total notional** across **82 markets** with ~1,645 resting orders.
+Wintermute quotes **$193M total notional** across **82 markets** with ~1,645 resting orders.
 
 | Metric | Value |
 |--------|-------|
@@ -41,7 +41,7 @@ MM quotes **$193M total notional** across **82 markets** with ~1,645 resting ord
 
 ## Tiered Size Structure
 
-MM uses a consistent tiered quoting structure across all markets:
+Wintermute uses a consistent tiered quoting structure across all markets:
 
 ### Key Characteristics
 - **~11 size tiers** per market
@@ -149,7 +149,7 @@ The data fetching pipeline is designed for high reliability under fluctuating ne
 # Open orders (main data source)
 curl -X POST "https://api.hyperliquid.xyz/info" \
   -H "Content-Type: application/json" \
-  -d '{"type": "openOrders", "user": "0x5b5d51203a0f9079f8aeb098a6523a13f298c060"}'
+  -d '{"type": "openOrders", "user": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"}'
 
 # Mid prices (for spread calculation)
 curl -X POST "https://api.hyperliquid.xyz/info" \

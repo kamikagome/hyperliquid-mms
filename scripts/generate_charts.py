@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate charts for MM Hyperliquid analysis.
+Generate charts for Wintermute Hyperliquid analysis.
 """
 
 import pandas as pd
@@ -64,7 +64,7 @@ def generate_summary_chart(orders):
     ax.axis('off')
     
     # Title
-    ax.text(0.5, 0.92, 'MM', fontsize=32, fontweight='bold', 
+    ax.text(0.5, 0.92, 'WINTERMUTE', fontsize=32, fontweight='bold',
             ha='center', va='top', color='white', transform=ax.transAxes)
     ax.text(0.5, 0.82, 'Hyperliquid Market Making Operation', fontsize=16,
             ha='center', va='top', color=COLORS['text'], transform=ax.transAxes,
@@ -102,7 +102,7 @@ def generate_summary_chart(orders):
                 color=COLORS['text'], transform=ax.transAxes, family='monospace')
     
     # Footer
-    ax.text(0.5, 0.05, 'Wallet: 0x5b5d51203a0f9079f8aeb098a6523a13f298c060',
+    ax.text(0.5, 0.05, 'Wallet: 0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00',
             fontsize=10, ha='center', color=COLORS['grid'], transform=ax.transAxes,
             family='monospace')
     ax.text(0.5, 0.01, 'Data: January 2026', fontsize=10, ha='center',
@@ -137,7 +137,7 @@ def generate_account_summary_chart(positions, balances, orders):
     short_notional = positions[positions["side"] == "SHORT"]["position_value"].abs().sum()
     net_exposure = long_notional - short_notional
     
-    total_orders = orders["total_orders"].sum()
+    total_orders = orders["total_orders"].sum() if orders is not None else 0
     num_positions = len(positions)
     
     fig, ax = plt.subplots(figsize=(12, 8))
@@ -145,7 +145,7 @@ def generate_account_summary_chart(positions, balances, orders):
     ax.axis('off')
     
     # Title
-    ax.text(0.5, 0.92, 'MM', fontsize=32, fontweight='bold',
+    ax.text(0.5, 0.92, 'WINTERMUTE', fontsize=32, fontweight='bold',
             ha='center', va='top', color='white', transform=ax.transAxes)
     ax.text(0.5, 0.82, 'Hyperliquid Account Summary', fontsize=16,
             ha='center', va='top', color=COLORS['text'], transform=ax.transAxes,
@@ -185,12 +185,12 @@ def generate_account_summary_chart(positions, balances, orders):
         ax.text(x, 0.15, label, fontsize=14, ha='center', va='center',
                 color=COLORS['text'], transform=ax.transAxes, family='monospace')
     
-    ax.text(0.5, 0.05, 'Wallet: 0x5b5d51203a0f9079f8aeb098a6523a13f298c060',
+    ax.text(0.5, 0.05, 'Wallet: 0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00',
             fontsize=10, ha='center', color=COLORS['grid'], transform=ax.transAxes,
             family='monospace')
     ax.text(0.5, 0.01, 'Data: January 2026', fontsize=10, ha='center',
             color=COLORS['grid'], transform=ax.transAxes, family='monospace')
-    
+
     save_figure(fig, "chart_account_summary.png")
 
 
@@ -222,7 +222,7 @@ def generate_market_notional_chart(orders):
         ax.text(bar.get_width() + 0.5, bar.get_y() + bar.get_height()/2,
                 f'${val:.1f}M', va='center', fontsize=10, color=COLORS['text'])
     
-    ax.set_title('MM ON HYPERLIQUID\nTop 15 Markets by Notional Value',
+    ax.set_title('WINTERMUTE ON HYPERLIQUID\nTop 15 Markets by Notional Value',
                  fontsize=16, fontweight='bold', color='white', family='monospace', pad=20)
     
     ax.spines['top'].set_visible(False)
@@ -261,7 +261,7 @@ def generate_bid_ask_balance_chart(orders):
     ax.legend(loc='upper right', facecolor=COLORS['bg'], edgecolor=COLORS['grid'],
               labelcolor=COLORS['text'])
     
-    ax.set_title('MM BID/ASK SYMMETRY\nNearly Balanced Exposure Across Markets',
+    ax.set_title('WINTERMUTE BID/ASK SYMMETRY\nNearly Balanced Exposure Across Markets',
                  fontsize=16, fontweight='bold', color='white', family='monospace', pad=20)
     
     ax.spines['top'].set_visible(False)
@@ -310,7 +310,7 @@ def generate_btc_depth_chart(detailed):
     ax.legend(loc='upper right', facecolor=COLORS['bg'], edgecolor=COLORS['grid'],
               labelcolor=COLORS['text'])
     
-    ax.set_title('MM BTC ORDER BOOK DEPTH\nCumulative Size at Each Price Level',
+    ax.set_title('WINTERMUTE BTC ORDER BOOK DEPTH\nCumulative Size at Each Price Level',
                  fontsize=16, fontweight='bold', color='white', family='monospace', pad=20)
     
     ax.spines['top'].set_visible(False)
@@ -353,7 +353,7 @@ def generate_size_tiers_chart(detailed):
     ax.set_yscale('log')
     ax.tick_params(colors=COLORS['text'])
     
-    ax.set_title('MM BTC SIZE TIERS\nLarger Sizes Deployed Further from Mid',
+    ax.set_title('WINTERMUTE BTC SIZE TIERS\nLarger Sizes Deployed Further from Mid',
                  fontsize=16, fontweight='bold', color='white', family='monospace', pad=20)
     
     ax.spines['top'].set_visible(False)
@@ -401,7 +401,7 @@ def generate_spot_balances_chart(balances):
         ax.text(bar.get_width() + 0.1, bar.get_y() + bar.get_height()/2,
                 f'${val:.1f}M', va='center', fontsize=10, color=COLORS['text'])
     
-    ax.set_title('MM SPOT HOLDINGS\nTop Token Balances by Value',
+    ax.set_title('WINTERMUTE SPOT HOLDINGS\nTop Token Balances by Value',
                  fontsize=16, fontweight='bold', color='white', family='monospace', pad=20)
     
     ax.spines['top'].set_visible(False)
@@ -443,7 +443,7 @@ def generate_positions_chart(positions):
         ax.text(bar.get_width() + 0.5, bar.get_y() + bar.get_height()/2,
                 label, va='center', fontsize=10, color=COLORS['text'])
     
-    ax.set_title('MM PERP POSITIONS\nTop 15 by Notional Value',
+    ax.set_title('WINTERMUTE PERP POSITIONS\nTop 15 by Notional Value',
                  fontsize=16, fontweight='bold', color='white', family='monospace', pad=20)
     
     ax.spines['top'].set_visible(False)
@@ -476,7 +476,7 @@ def generate_long_short_chart(positions):
         text.set_fontsize(14)
         text.set_fontweight('bold')
     
-    ax.set_title('MM EXPOSURE\nLong vs Short Position Value',
+    ax.set_title('WINTERMUTE EXPOSURE\nLong vs Short Position Value',
                  fontsize=16, fontweight='bold', color='white', family='monospace', pad=20)
     
     save_figure(fig, "chart_long_short.png")
@@ -486,14 +486,16 @@ def generate_markdown_report(orders, positions, balances):
     """Generate a markdown report embedding all charts."""
     report_path = Path(__file__).parent.parent / "REPORT.md"
     
-    total_notional = orders["total_notional_usd"].sum()
-    total_orders = orders["total_orders"].sum()
+    total_notional = orders["total_notional_usd"].sum() if orders is not None else 0
+    total_orders = orders["total_orders"].sum() if orders is not None else 0
     net_exposure = positions[positions["side"] == "LONG"]["position_value"].sum() - positions[positions["side"] == "SHORT"]["position_value"].abs().sum()
     
-    btc_row = orders[orders["market"] == "BTC"]
-    btc_skew = btc_row["spread_skew_bps"].iloc[0] if not btc_row.empty and "spread_skew_bps" in btc_row else 0
+    btc_skew = 0
+    if orders is not None:
+        btc_row = orders[orders["market"] == "BTC"]
+        btc_skew = btc_row["spread_skew_bps"].iloc[0] if not btc_row.empty and "spread_skew_bps" in btc_row else 0
     
-    md_content = f"""# MM Operation Dashboard
+    md_content = f"""# Wintermute Operation Dashboard
 
 ## Key Statistics
 - **Total Orders Notional:** ${total_notional/1e6:,.1f}M
@@ -503,22 +505,27 @@ def generate_markdown_report(orders, positions, balances):
 
 ## Charts
 ![Account Summary](images/chart_account_summary.png)
-![Strategy Summary](images/chart_summary.png)
-![Market Notional](images/chart_market_notional.png)
-![Spot Balances](images/chart_spot_balances.png)
-![Perp Positions](images/chart_positions.png)
-![Long/Short Exposure](images/chart_long_short.png)
-![Bid/Ask Symmetry](images/chart_bid_ask_balance.png)
-![BTC Depth](images/chart_btc_depth.png)
-![BTC Size Tiers](images/chart_size_tiers.png)
 """
+    if orders is not None:
+        md_content += f"![Strategy Summary](images/chart_summary.png)\n"
+        md_content += f"![Market Notional](images/chart_market_notional.png)\n"
+    
+    md_content += f"![Spot Balances](images/chart_spot_balances.png)\n"
+    md_content += f"![Perp Positions](images/chart_positions.png)\n"
+    md_content += f"![Long/Short Exposure](images/chart_long_short.png)\n"
+    
+    if orders is not None:
+        md_content += f"![Bid/Ask Symmetry](images/chart_bid_ask_balance.png)\n"
+        md_content += f"![BTC Depth](images/chart_btc_depth.png)\n"
+        md_content += f"![BTC Size Tiers](images/chart_size_tiers.png)\n"
+        
     with open(report_path, "w") as f:
         f.write(md_content)
     print(f"Saved dashboard to {report_path.name}")
 
 
 def main():
-    print("Generating MM analysis charts...")
+    print("Generating Wintermute analysis charts...")
     print("=" * 50)
     
     IMAGES_DIR.mkdir(exist_ok=True)
@@ -530,16 +537,20 @@ def main():
     detailed = load_csv("quoting_strategy_detailed.csv")
     
     # Check if critical files loaded properly before proceeding
-    if any(df is None for df in [orders, positions, balances, detailed]):
-        print("Missing required data files. Aborting script.")
+    if any(df is None for df in [positions, balances]):
+        print("Missing required position or balance data files. Aborting script.")
         sys.exit(1)
         
-    generate_summary_chart(orders)
+    if orders is not None:
+        generate_summary_chart(orders)
+        generate_market_notional_chart(orders)
+        generate_bid_ask_balance_chart(orders)
+        
+    if detailed is not None:
+        generate_btc_depth_chart(detailed)
+        generate_size_tiers_chart(detailed)
+        
     generate_account_summary_chart(positions, balances, orders)
-    generate_market_notional_chart(orders)
-    generate_bid_ask_balance_chart(orders)
-    generate_btc_depth_chart(detailed)
-    generate_size_tiers_chart(detailed)
     generate_spot_balances_chart(balances)
     generate_positions_chart(positions)
     generate_long_short_chart(positions)

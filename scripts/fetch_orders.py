@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
-Fetch MM's open orders from Hyperliquid and analyze quoting strategy.
+Fetch Wintermute's open orders from Hyperliquid and analyze quoting strategy.
 """
 
 import requests
 import csv
+import os
 from collections import defaultdict
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-WALLET = "0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
+WALLET = "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
 API_URL = "https://api.hyperliquid.xyz/info"
 OUTPUT_SUMMARY = "data/quoting_strategy_summary.csv"
 OUTPUT_DETAILED = "data/quoting_strategy_detailed.csv"
@@ -262,6 +263,7 @@ def main():
                       "avg_bid_spacing_pct", "avg_ask_spacing_pct",
                       "avg_bid_distance_bps", "avg_ask_distance_bps", "spread_skew_bps"]
     
+    os.makedirs(os.path.dirname(OUTPUT_SUMMARY), exist_ok=True)
     with open(OUTPUT_SUMMARY, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=summary_fields)
         writer.writeheader()
