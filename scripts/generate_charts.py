@@ -13,13 +13,13 @@ import sys
 # Style configuration
 plt.style.use('dark_background')
 COLORS = {
-    'blue': '#6B9FFF',
-    'green': '#4ADE80',
-    'red': '#F87171',
-    'orange': '#FB923C',
-    'bg': '#1a1b26',
-    'text': '#c0caf5',
-    'grid': '#3b4261'
+    'blue': '#FFFFFF',      # Reassigned to White (Main text & elements)
+    'green': '#2bd1a7',     # Hyperliquid Green (Bids, Longs, Positives)
+    'red': '#5A6470',       # Slate Gray (Asks, Shorts, Negatives)
+    'orange': '#8A94A3',    # Light Gray (Spot, neutral lines)
+    'bg': '#0B0E14',        # Hyperliquid Dark Background
+    'text': '#F1F5F9',      # Off White Text
+    'grid': '#1A1D27'       # Subtle Grid
 }
 
 DATA_DIR = Path(__file__).parent.parent / "data"
@@ -82,7 +82,7 @@ def generate_summary_chart(orders):
     for i, (value, label) in enumerate(metrics_row1):
         x = 0.2 + i * 0.3
         ax.text(x, 0.58, value, fontsize=36, fontweight='bold',
-                ha='center', va='center', color=COLORS['blue'], transform=ax.transAxes)
+                ha='center', va='center', color=COLORS['green'], transform=ax.transAxes)
         ax.text(x, 0.45, label, fontsize=14, ha='center', va='center',
                 color=COLORS['text'], transform=ax.transAxes, family='monospace')
     
@@ -96,7 +96,7 @@ def generate_summary_chart(orders):
     for i, (value, label) in enumerate(metrics_row2):
         x = 0.2 + i * 0.3
         ax.text(x, 0.28, value, fontsize=36, fontweight='bold',
-                ha='center', va='center', color=COLORS['blue'], transform=ax.transAxes)
+                ha='center', va='center', color=COLORS['green'], transform=ax.transAxes)
         ax.text(x, 0.15, label, fontsize=14, ha='center', va='center',
                 color=COLORS['text'], transform=ax.transAxes, family='monospace')
     
@@ -161,7 +161,7 @@ def generate_account_summary_chart(positions, balances, orders):
     
     for i, (value, label) in enumerate(metrics_row1):
         x = 0.2 + i * 0.3
-        color = COLORS['red'] if 'SHORT' in label else COLORS['blue']
+        color = COLORS['red'] if 'SHORT' in label else COLORS['green']
         ax.text(x, 0.58, value, fontsize=36, fontweight='bold',
                 ha='center', va='center', color=color, transform=ax.transAxes)
         ax.text(x, 0.45, label, fontsize=14, ha='center', va='center',
@@ -204,7 +204,7 @@ def generate_market_notional_chart(orders):
     ax.set_facecolor(COLORS['bg'])
     
     # Color based on whether it's a standard perp or spot market
-    colors = [COLORS['blue'] if not m.startswith('@') else COLORS['orange'] for m in markets]
+    colors = [COLORS['green'] if not m.startswith('@') else COLORS['blue'] for m in markets]
     
     bars = ax.barh(range(len(markets)), notionals, color=colors, edgecolor='none')
     
@@ -341,7 +341,7 @@ def generate_size_tiers_chart(detailed):
     
     for _, row in grouped.iterrows():
         ax.scatter(row["avg_dist"], row["size_rounded"], s=row["count"] * 100, 
-                   alpha=0.7, color=COLORS['blue'], edgecolors='white', linewidth=1)
+                   alpha=0.7, color=COLORS['green'], edgecolors=COLORS['bg'], linewidth=1)
         ax.annotate(f'{int(row["count"])} orders', (row["avg_dist"], row["size_rounded"]),
                     xytext=(10, 0), textcoords='offset points',
                     fontsize=9, color=COLORS['text'])
