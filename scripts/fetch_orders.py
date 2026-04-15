@@ -6,6 +6,8 @@ Fetch Wintermute's open orders from Hyperliquid and analyze quoting strategy.
 import requests
 import csv
 from collections import defaultdict
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 WALLET = "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
 API_URL = "https://api.hyperliquid.xyz/info"
@@ -13,11 +15,16 @@ OUTPUT_SUMMARY = "data/quoting_strategy_summary.csv"
 OUTPUT_DETAILED = "data/quoting_strategy_detailed.csv"
 OUTPUT_TIERS = "data/quoting_strategy_tiers.csv"
 
+# Configure robust session with retries
+session = requests.Session()
+retries = Retry(total=5, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
+session.mount("https://", HTTPAdapter(max_retries=retries))
+
 
 def fetch_open_orders():
     """Fetch user's open orders."""
     payload = {"type": "openOrders", "user": WALLET}
-    response = requests.post(API_URL, json=payload)
+    response = session.post(API_URL, json=payload)
     response.raise_for_status()
     return response.json()
 
@@ -25,7 +32,7 @@ def fetch_open_orders():
 def fetch_all_mids():
     """Fetch current mid prices for all markets."""
     payload = {"type": "allMids"}
-    response = requests.post(API_URL, json=payload)
+    response = session.post(API_URL, json=payload)
     response.raise_for_status()
     return response.json()
 

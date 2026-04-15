@@ -1,15 +1,21 @@
-
 import requests
 import csv
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 WALLET = "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
 API_URL = "https://api.hyperliquid.xyz/info"
 OUTPUT_FILE = "data/balances.csv"
 
+# Configure robust session with retries
+session = requests.Session()
+retries = Retry(total=5, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
+session.mount("https://", HTTPAdapter(max_retries=retries))
+
 def fetch_spot_clearinghouse_state():
     """Fetch user's spot clearinghouse state including balances."""
     payload = {"type": "spotClearinghouseState", "user": WALLET}
-    response = requests.post(API_URL, json=payload)
+    response = session.post(API_URL, json=payload)
     response.raise_for_status()
     return response.json()
 
