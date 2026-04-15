@@ -80,6 +80,12 @@ Distance from Mid    Size (ETH)    Notional
 
 ## Spread Analysis
 
+### Spread Skew (Market Direction Bias)
+
+We compute **Spread Skew** to analyze inventory leaning: `Average Ask Distance (bps) - Average Bid Distance (bps)`.
+- **Negative Skew:** Bids are placed further out than Asks. The market maker is leaning toward **selling** to offload inventory.
+- **Positive Skew:** Asks are placed further out than Bids. The market maker is leaning toward **buying** to accumulate inventory.
+
 ### Spread by Market Cap Tier
 
 | Tier | Markets | Avg Spread | Avg Orders |
