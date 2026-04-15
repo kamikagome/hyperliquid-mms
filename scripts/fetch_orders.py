@@ -24,7 +24,7 @@ session.mount("https://", HTTPAdapter(max_retries=retries))
 def fetch_open_orders():
     """Fetch user's open orders."""
     payload = {"type": "openOrders", "user": WALLET}
-    response = session.post(API_URL, json=payload)
+    response = session.post(API_URL, json=payload, timeout=10)
     response.raise_for_status()
     return response.json()
 
@@ -32,7 +32,7 @@ def fetch_open_orders():
 def fetch_all_mids():
     """Fetch current mid prices for all markets."""
     payload = {"type": "allMids"}
-    response = session.post(API_URL, json=payload)
+    response = session.post(API_URL, json=payload, timeout=10)
     response.raise_for_status()
     return response.json()
 

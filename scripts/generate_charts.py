@@ -248,8 +248,8 @@ def generate_bid_ask_balance_chart(orders):
     x = np.arange(len(markets))
     width = 0.35
     
-    bars1 = ax.bar(x - width/2, bids, width, label='Bid Notional', color=COLORS['green'])
-    bars2 = ax.bar(x + width/2, asks, width, label='Ask Notional', color=COLORS['red'])
+    ax.bar(x - width/2, bids, width, label='Bid Notional', color=COLORS['green'])
+    ax.bar(x + width/2, asks, width, label='Ask Notional', color=COLORS['red'])
     
     ax.set_ylabel('Notional Value ($ Millions)', fontsize=12, color=COLORS['text'],
                   family='monospace')

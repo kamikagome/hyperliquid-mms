@@ -15,7 +15,7 @@ session.mount("https://", HTTPAdapter(max_retries=retries))
 def fetch_spot_clearinghouse_state():
     """Fetch user's spot clearinghouse state including balances."""
     payload = {"type": "spotClearinghouseState", "user": WALLET}
-    response = session.post(API_URL, json=payload)
+    response = session.post(API_URL, json=payload, timeout=10)
     response.raise_for_status()
     return response.json()
 
