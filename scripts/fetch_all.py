@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Fetch all Wintermute data from Hyperliquid for 1 day.
+Fetch all MM data from Hyperliquid for 1 day.
 Primary focus: quoting strategy analysis from open orders.
 """
 
@@ -18,7 +18,7 @@ def main():
         ("Spot Balances", "fetch_balances.py"),
     ]
     
-    print("Wintermute Hyperliquid Data Fetcher")
+    print("MM Hyperliquid Data Fetcher")
     
     for name, script in scripts:
         print(f"\n{'='*60}")
