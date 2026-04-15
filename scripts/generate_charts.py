@@ -481,6 +481,37 @@ def generate_long_short_chart(positions):
     save_figure(fig, "chart_long_short.png")
 
 
+def generate_markdown_report(orders, positions, balances):
+    """Generate a markdown report embedding all charts."""
+    report_path = Path(__file__).parent.parent / "REPORT.md"
+    
+    total_notional = orders["total_notional_usd"].sum()
+    total_orders = orders["total_orders"].sum()
+    net_exposure = positions[positions["side"] == "LONG"]["position_value"].sum() - positions[positions["side"] == "SHORT"]["position_value"].abs().sum()
+    
+    md_content = f"""# Wintermute Operation Dashboard
+
+## Key Statistics
+- **Total Orders Notional:** ${total_notional/1e6:,.1f}M
+- **Total Open Orders:** {total_orders:,}
+- **Net Perp Exposure:** ${net_exposure/1e6:,.1f}M
+
+## Charts
+![Account Summary](images/chart_account_summary.png)
+![Strategy Summary](images/chart_summary.png)
+![Market Notional](images/chart_market_notional.png)
+![Spot Balances](images/chart_spot_balances.png)
+![Perp Positions](images/chart_positions.png)
+![Long/Short Exposure](images/chart_long_short.png)
+![Bid/Ask Symmetry](images/chart_bid_ask_balance.png)
+![BTC Depth](images/chart_btc_depth.png)
+![BTC Size Tiers](images/chart_size_tiers.png)
+"""
+    with open(report_path, "w") as f:
+        f.write(md_content)
+    print(f"Saved dashboard to {report_path.name}")
+
+
 def main():
     print("Generating Wintermute analysis charts...")
     print("=" * 50)
@@ -508,8 +539,10 @@ def main():
     generate_positions_chart(positions)
     generate_long_short_chart(positions)
     
+    generate_markdown_report(orders, positions, balances)
+    
     print("=" * 50)
-    print("Done! Charts saved to images/ directory.")
+    print("Done! Charts saved to images/ directory and REPORT.md generated.")
 
 
 if __name__ == "__main__":
