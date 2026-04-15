@@ -9,7 +9,14 @@ Reverse engineering **Wintermute's** market making quoting strategy on Hyperliqu
 ```bash
 pip install -r requirements.txt
 python scripts/fetch_all.py
+python scripts/generate_charts.py
 ```
+
+## Interactive Dashboard
+
+After running the data fetching and chart generation scripts, you can view a unified visual report:
+
+- **[REPORT.md](REPORT.md)** - A comprehensive markdown dashboard embedding all strategy charts, inventory stats, and account summaries. Perfect for reviewing the entire operation in a single scrollable view.
 
 ## Quoting Strategy Overview
 
