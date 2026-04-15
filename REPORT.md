@@ -1,9 +1,10 @@
 # Wintermute Operation Dashboard
 
 ## Key Statistics
-- **Total Orders Notional:** $204.4M
-- **Total Open Orders:** 1,761
+- **Total Orders Notional:** $201.1M
+- **Total Open Orders:** 1,764
 - **Net Perp Exposure:** $-18.1M
+- **BTC Spread Skew:** -8.88 bps
 
 ## Charts
 ![Account Summary](images/chart_account_summary.png)

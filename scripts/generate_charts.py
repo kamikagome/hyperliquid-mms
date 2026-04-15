@@ -54,9 +54,10 @@ def generate_summary_chart(orders):
     total_orders = orders["total_orders"].sum()
     num_markets = len(orders)
     
-    # BTC spread
+    # BTC spread and skew
     btc_row = orders[orders["market"] == "BTC"]
     btc_spread = btc_row["spread_pct"].iloc[0] if not btc_row.empty else 0
+    btc_skew = btc_row["spread_skew_bps"].iloc[0] if not btc_row.empty and "spread_skew_bps" in btc_row else 0
     
     fig, ax = plt.subplots(figsize=(12, 8))
     ax.set_facecolor(COLORS['bg'])
@@ -89,8 +90,8 @@ def generate_summary_chart(orders):
     # Metrics - Row 2
     metrics_row2 = [
         (f"{btc_spread:.2f}%", "BTC Spread"),
+        (f"{btc_skew:.2f}", "BTC Skew (bps)"),
         ("11", "Size Tiers"),
-        ("2.6x", "Tier Multiplier"),
     ]
     
     for i, (value, label) in enumerate(metrics_row2):
@@ -489,12 +490,16 @@ def generate_markdown_report(orders, positions, balances):
     total_orders = orders["total_orders"].sum()
     net_exposure = positions[positions["side"] == "LONG"]["position_value"].sum() - positions[positions["side"] == "SHORT"]["position_value"].abs().sum()
     
+    btc_row = orders[orders["market"] == "BTC"]
+    btc_skew = btc_row["spread_skew_bps"].iloc[0] if not btc_row.empty and "spread_skew_bps" in btc_row else 0
+    
     md_content = f"""# Wintermute Operation Dashboard
 
 ## Key Statistics
 - **Total Orders Notional:** ${total_notional/1e6:,.1f}M
 - **Total Open Orders:** {total_orders:,}
 - **Net Perp Exposure:** ${net_exposure/1e6:,.1f}M
+- **BTC Spread Skew:** {btc_skew:.2f} bps
 
 ## Charts
 ![Account Summary](images/chart_account_summary.png)

@@ -150,6 +150,17 @@ def main():
                 spacing = abs(levels[i]["price"] - levels[i-1]["price"]) / levels[i-1]["price"] * 100
                 spacings.append(spacing)
             return sum(spacings) / len(spacings) if spacings else 0
+            
+        # Calculate Spread Skew (Avg Ask Distance from Mid - Avg Bid Distance from Mid)
+        def avg_distance(levels, mid):
+            if not levels or mid == 0:
+                return 0
+            distances = [abs(l["price"] - mid) / mid * 10000 for l in levels]
+            return sum(distances) / len(distances)
+            
+        avg_bid_dist = avg_distance(bids, mid_price)
+        avg_ask_dist = avg_distance(asks, mid_price)
+        spread_skew_bps = avg_ask_dist - avg_bid_dist
         
         summary_rows.append({
             "market": coin,
@@ -166,7 +177,10 @@ def main():
             "ask_notional_usd": ask_notional,
             "total_notional_usd": bid_notional + ask_notional,
             "avg_bid_spacing_pct": avg_spacing(bids),
-            "avg_ask_spacing_pct": avg_spacing(asks)
+            "avg_ask_spacing_pct": avg_spacing(asks),
+            "avg_bid_distance_bps": avg_bid_dist,
+            "avg_ask_distance_bps": avg_ask_dist,
+            "spread_skew_bps": spread_skew_bps
         })
         
         # Generate detailed rows with level analysis
@@ -245,7 +259,8 @@ def main():
     summary_fields = ["market", "total_orders", "num_bids", "num_asks", "best_bid", "best_ask",
                       "mid_price", "spread_pct", "total_bid_size", "total_ask_size",
                       "bid_notional_usd", "ask_notional_usd", "total_notional_usd",
-                      "avg_bid_spacing_pct", "avg_ask_spacing_pct"]
+                      "avg_bid_spacing_pct", "avg_ask_spacing_pct",
+                      "avg_bid_distance_bps", "avg_ask_distance_bps", "spread_skew_bps"]
     
     with open(OUTPUT_SUMMARY, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=summary_fields)
@@ -296,7 +311,8 @@ def main():
     print("="*60)
     for r in summary_rows[:10]:
         spread_bps = r["spread_pct"] * 100
-        print(f"  {r['market']:8} ${r['total_notional_usd']:>12,.0f}  {r['total_orders']:>3} orders  {spread_bps:>6.2f} bps spread")
+        skew_bps = r["spread_skew_bps"]
+        print(f"  {r['market']:8} ${r['total_notional_usd']:>12,.0f}  {r['total_orders']:>3} orders  {spread_bps:>6.2f} bps spread  {skew_bps:>7.2f} bps skew")
     
     # Spread statistics
     spreads = [r["spread_pct"] * 100 for r in summary_rows if r["spread_pct"] > 0]
