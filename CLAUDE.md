@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Wintermute Hyperliquid Quoting Strategy Analysis** - Reverse engineering and analyzing the market-making quoting strategy of Wintermute (wallet: `0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00`) on the Hyperliquid perpetual futures exchange.
 
-The analysis identifies patterns in how Wintermute quotes across ~76 markets with ~1,700 resting orders, including spread analysis, order size tiers, and inventory management strategies.
+The analysis identifies patterns in how Wintermute quotes across 70+ markets with ~1,700 resting orders, including spread analysis, order size tiers, and inventory management strategies.
 
 ## Architecture
 
