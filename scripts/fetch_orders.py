@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Fetch Wintermute's open orders from Hyperliquid and analyze quoting strategy.
+Fetch MM's open orders from Hyperliquid and analyze quoting strategy.
 """
 
 import requests
@@ -9,7 +9,7 @@ from collections import defaultdict
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-WALLET = "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00"
+WALLET = "0x5b5d51203a0f9079f8aeb098a6523a13f298c060"
 API_URL = "https://api.hyperliquid.xyz/info"
 OUTPUT_SUMMARY = "data/quoting_strategy_summary.csv"
 OUTPUT_DETAILED = "data/quoting_strategy_detailed.csv"

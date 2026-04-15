@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Wintermute Hyperliquid Quoting Strategy Analysis** - Reverse engineering and analyzing the market-making quoting strategy of Wintermute (wallet: `0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00`) on the Hyperliquid perpetual futures exchange.
+**MM Hyperliquid Quoting Strategy Analysis** - Reverse engineering and analyzing the market-making quoting strategy of MM (wallet: `0x5b5d51203a0f9079f8aeb098a6523a13f298c060`) on the Hyperliquid perpetual futures exchange.
 
-The analysis identifies patterns in how Wintermute quotes across 70+ markets with ~1,700 resting orders, including spread analysis, order size tiers, and inventory management strategies.
+The analysis identifies patterns in how MM quotes across 70+ markets with ~1,700 resting orders, including spread analysis, order size tiers, and inventory management strategies.
 
 ## Architecture
 
-The codebase consists of three independent data-fetching pipelines that query the Hyperliquid public API and analyze different aspects of Wintermute's activity:
+The codebase consists of three independent data-fetching pipelines that query the Hyperliquid public API and analyze different aspects of MM's activity:
 
 ```
 Hyperliquid API
@@ -96,7 +96,7 @@ Note: No testing framework or type checking configured. Analysis data comes from
 
 ## Important Context
 
-- All analysis targets a single wallet address (`0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00`)
+- All analysis targets a single wallet address (`0x5b5d51203a0f9079f8aeb098a6523a13f298c060`)
 - Data is point-in-time (refreshes on each script run) - no historical tracking
 - Tier identification uses a 5% size tolerance heuristic (can be adjusted in `identify_tiers()`)
 - Distance-from-mid is calculated as basis points: `abs(price - mid) / mid * 10000`
